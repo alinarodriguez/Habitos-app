@@ -1,0 +1,16 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Habit {
+  id        String   @id @default(cuid())
+  title     String
+  date      String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
