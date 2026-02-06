@@ -109,12 +109,18 @@ export default function Home() {
     </main>
   );
 }*/
-import { client } from "../lib/contentful";
+import { client } from "./lib/contentful";
+
+type Habit = {
+  title: string;
+  date: string;
+  completed: boolean;
+};
 
 export default async function Home() {
   const res = await client.getEntries({ content_type: "habit" });
 
-  const habits = res.items.map((item: any) => ({
+  const habits: Habit[] = res.items.map((item: any) => ({
     title: item.fields.title,
     date: item.fields.date,
     completed: item.fields.completed,
@@ -145,4 +151,3 @@ export default async function Home() {
     </main>
   );
 }
-
