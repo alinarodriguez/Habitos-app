@@ -109,7 +109,7 @@ export default function Home() {
     </main>
   );
 }*/
-import { client } from "@/lib/contentful";
+import { client } from "../lib/contentful";
 
 export default async function Home() {
   const res = await client.getEntries({ content_type: "habit" });
