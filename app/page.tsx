@@ -1,3 +1,4 @@
+/*
 "use client";
 
 import { useState, useEffect } from "react";
@@ -107,4 +108,41 @@ export default function Home() {
       </ul>
     </main>
   );
+}*/
+import { client } from "@/lib/contentful";
+
+export default async function Home() {
+  const res = await client.getEntries({ content_type: "habit" });
+
+  const habits = res.items.map((item: any) => ({
+    title: item.fields.title,
+    date: item.fields.date,
+    completed: item.fields.completed,
+  }));
+
+  return (
+    <main className="min-h-screen bg-gray-100 p-8">
+      <h1 className="text-3xl font-bold mb-4">Mis Hábitos (Contentful)</h1>
+
+      <div className="space-y-3 max-w-md">
+        {habits.map((h, i) => (
+          <div
+            key={i}
+            className="bg-white p-3 rounded shadow flex justify-between items-center"
+          >
+            <div>
+              <p className="font-medium">{h.title}</p>
+              <p className="text-sm text-gray-500">{h.date}</p>
+            </div>
+            <span>{h.completed ? "✅" : "❌"}</span>
+          </div>
+        ))}
+
+        {habits.length === 0 && (
+          <p className="text-gray-500">No hay hábitos en Contentful todavía.</p>
+        )}
+      </div>
+    </main>
+  );
 }
+
